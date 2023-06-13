@@ -63,7 +63,6 @@ const getProducts = async () => {
       worksheet.addRow(["Ref",productRef])
       products.forEach((product) => {
         worksheet.addRows([product]);
-          // worksheet.addRow([product.key, product.value]);
           console.log(product)
       });
       worksheet.addRow([""])
