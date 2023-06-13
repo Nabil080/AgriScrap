@@ -11,6 +11,8 @@ const getProducts = async () => {
 
   let hasNextPage = true;
   let hasProperties;
+  // let clapet = "Non";
+
 
   await page.goto("https://agriestdistribution.fr/Bennes-a-grappins--0000792-vente/BENNE-A-GRAPPIN-AP-BG-AVC-DTS-LG-1500-QUICKE-3--0002510.html", {
     waitUntil: "domcontentloaded",
@@ -18,9 +20,11 @@ const getProducts = async () => {
 
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Bennes");
+  worksheet.addRow(["Nom","Ref","Type","Largeur","Modèle","Type d'attelage","Volume théorique", "Poids","Clapet"])
 
 
-  // while (hasNextPage) {
+  while (hasNextPage) {
+    // for(let i = 0; i<3;i++){
       const products = await page.evaluate(() => {
 
           const productTable = document.querySelector(".table-ui-shop-property-table");
@@ -28,32 +32,28 @@ const getProducts = async () => {
           if(productTable !== null){
             const productRows = productTable.querySelectorAll("tr")
 
+
             return Array.from(productRows).map((product) => {
               const key = product.querySelector(".ui-shop-prop-label").innerText;
               const value = product.querySelector(".ui-shop-prop-valeur").innerText;
 
-              return [key,value]
+              return value
             })
-          }else{
-            return []
           }
 
       });
       const productName = await page.evaluate(() => document.querySelector('.ui-shop-nom').innerText)
       const productRef = await page.evaluate(() => document.querySelector('.ui-shop-ref > .ui-shop-ref-value').innerText)
 
-      console.log(productName,productRef)
 
-      worksheet.addRow(["Nom",productName])
-      worksheet.addRow(["Ref",productRef])
-      products.forEach((product) => {
-        worksheet.addRows([product]);
-          // worksheet.addRow([product.key, product.value]);
-          console.log(product)
-      });
-      worksheet.addRow([""])
+
+      products.unshift(productRef)
+      products.unshift(productName)
+
+      worksheet.addRow(products)
+      console.log(products)
+
       worksheet.addRow(["-------","-------"])
-      worksheet.addRow([""])
 
       hasNextPage = await page.evaluate(() => {
           const nextButton = document.querySelector(".pull-right > a");
@@ -68,9 +68,9 @@ const getProducts = async () => {
             waitUntil: "domcontentloaded",
         });      
       }
-  // }
+    }
 
-  await workbook.xlsx.writeFile("results/bennes.xlsx");          
+  await workbook.xlsx.writeFile("test.xlsx");          
 
 await browser.close();
 
