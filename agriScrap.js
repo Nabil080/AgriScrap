@@ -2,19 +2,19 @@ import puppeteer from "puppeteer";
 import ExcelJS from "exceljs";
 
 if (process.argv.length < 4) {
-  console.log("Veuillez spécifier les deux paramètres requis :")
-  console.log("1. L'URL de base")
-  console.log("2. Le nom du fichier Excel dans lequel les données seront sauvegardées")
-  console.log("Exemple: node agriscrap.js https://example.com données")
+  console.log("\x1b[33mVeuillez spécifier les deux paramètres requis :\x1b[0m'")
+  console.log("1.\x1b[33mL'URL\x1b[0m de base.")
+  console.log("2.\x1b[33mLe nom du fichier Excel\x1b[0m dans lequel les données seront sauvegardées.")
+  console.log("Exemple: node agriscrap.js https://agriestdistribution.fr/Bennes-a-grappins--0000792-vente/BENNE-A-GRAPPIN-AP-BG-AVC-DTS-LG-1500-QUICKE-3--0002510.html excel_agriest")
   process.exit(1);
 }
 
 const baseUrl = process.argv[2];
 const fileName = process.argv[3];
 
-console.log('Bienvenue chez agriScrap!')
-console.log(`Récupération des données en cours, l'url de base est : ${baseUrl} .`);
-console.log(`Les données seront sauvegardées dans un fichier ${fileName}.xlsx dans le dossier 'results'`);
+console.log('Bienvenue chez\x1b[33m AgriScrap\x1b[0m !')
+console.log(`\x1b[33mRécupération des données en cours\x1b[0m, l'url de base est : ${baseUrl} .`);
+console.log(`Les données seront sauvegardées dans un fichier\x1b[33m ${fileName}.xlsx\x1b[0m dans le dossier 'results'`);
 
 const getProducts = async () => {
   const browser = await puppeteer.launch({
