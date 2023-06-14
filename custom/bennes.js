@@ -20,7 +20,7 @@ const getProducts = async () => {
   const worksheet = workbook.addWorksheet("Bennes");
 
 
-  // while (hasNextPage) {
+  while (hasNextPage) {
       const products = await page.evaluate(() => {
 
           const productTable = document.querySelector(".table-ui-shop-property-table");
@@ -68,7 +68,7 @@ const getProducts = async () => {
             waitUntil: "domcontentloaded",
         });      
       }
-  // }
+  }
 
   await workbook.xlsx.writeFile("results/bennes.xlsx");          
 
