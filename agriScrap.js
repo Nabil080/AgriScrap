@@ -30,8 +30,19 @@ const login = async (page) => {
   await page.type("#email", loginEmail);
   await page.type("#password", loginPassword);
   await page.click(".panel-footer > button");
-
   await page.waitForNavigation();
+
+  // Selectionne les prix brut
+  await page.select('select[name="prixTpl"]', 'brut');
+
+  const selectedValue = await page.evaluate(() => {
+    const selectElement = document.querySelector('select[name="prixTpl"]');
+    return selectElement.value;
+  });
+  
+  console.log(selectedValue);
+
+
 }
 
 
@@ -77,6 +88,13 @@ const getProducts = async () => {
           }
 
       });
+      const selectedValue = await page.evaluate(() => {
+        const selectElement = document.querySelector('select[name="prixTpl"]');
+        return selectElement.value;
+      });
+      
+      console.log(selectedValue);
+
       const productName = await page.evaluate(() => document.querySelector('.ui-shop-nom').innerText)
       const productRef = await page.evaluate(() => document.querySelector('.ui-shop-ref > .ui-shop-ref-value').innerText)
       
