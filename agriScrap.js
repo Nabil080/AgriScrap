@@ -79,7 +79,16 @@ const getProducts = async () => {
       });
       const productName = await page.evaluate(() => document.querySelector('.ui-shop-nom').innerText)
       const productRef = await page.evaluate(() => document.querySelector('.ui-shop-ref > .ui-shop-ref-value').innerText)
-      const productPrice = await page.evaluate(() => document.querySelector('span.prixtpl > .ht > .value').innerText)
+      
+      const productPrice = await page.evaluate(() => {
+        const productDiv = document.querySelector('span.prixtpl > .ht > .value')
+
+        if(productDiv === null)
+          return "inconnu"
+        else
+          return productDiv.innerText
+      })
+
 
       console.log(productPrice)
 
