@@ -88,12 +88,6 @@ const getProducts = async () => {
           }
 
       });
-      const selectedValue = await page.evaluate(() => {
-        const selectElement = document.querySelector('select[name="prixTpl"]');
-        return selectElement.value;
-      });
-      
-      console.log(selectedValue);
 
       const productName = await page.evaluate(() => document.querySelector('.ui-shop-nom').innerText)
       const productRef = await page.evaluate(() => document.querySelector('.ui-shop-ref > .ui-shop-ref-value').innerText)
